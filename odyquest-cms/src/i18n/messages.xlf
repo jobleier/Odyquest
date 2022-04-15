@@ -86,6 +86,20 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="image_selection.url" datatype="html">
+        <source>URL: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image-selection/image-selection.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="image_selection.used_in" datatype="html">
+        <source>used in: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image-selection/image-selection.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="add_image" datatype="html">
         <source> Add image </source>
         <context-group purpose="location">

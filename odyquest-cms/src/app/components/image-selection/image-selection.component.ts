@@ -34,4 +34,7 @@ export class ImageSelectionComponent implements OnInit {
   getMatCardImageClass(): string {
     return 'game_element_image';
   }
+  getUsages(image: Image) {
+    return this.chaseEditor.getChase().usagesOfMedia(image.mediaId);
+  }
 }

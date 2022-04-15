@@ -9,7 +9,11 @@
     <chase-image [imgClass]="getMatCardImageClass()"
        [image]="image">
     </chase-image>
-    <p>{{getUrl(image)}}</p>
+    <p>
+      <span i18n="@@image_selection.url">URL: </span>{{getUrl(image)}}
+      <br />
+      <span i18n="@@image_selection.used_in">used in: </span>{{getUsages(image)}}
+    </p>
     <hr />
   </li>
 </ul>
