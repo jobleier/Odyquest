@@ -176,6 +176,46 @@ export class Chase extends ChaseSummary {
     return this.gameElements.get(destination);
   }
 
+  findUsagesOfMediaInGameElements(mediaId: string): number[] {
+    let list = new Array<number>();
+    for (let id of this.gameElements.keys()) {
+      let element = this.gameElements.get(id);
+      if (element && element.description.image === mediaId) {
+        list.push(id);
+      } else if (element instanceof Narrative && element.media === mediaId) {
+        list.push(id);
+      }
+    }
+    return list;
+  }
+
+  usagesOfMediaInGameElements(mediaId: string): string[] {
+    let ids = this.findUsagesOfMediaInGameElements(mediaId);
+    let list = new Array<string>();
+    for (const id of ids) {
+      const element = this.gameElements.get(id);
+      if (element) {
+        list.push(element.title + " (" + id + ")");
+      }
+    }
+    return list;
+  }
+
+  usagesOfMediaInMetaData(mediaId: string): string[] {
+    let list = new Array<string>();
+    if (this.metaData.preview && this.metaData.preview.image && this.metaData.preview.image === mediaId) {
+      list.push('preview');
+    }
+    if (this.metaData.author && this.metaData.author.image && this.metaData.author.image === mediaId) {
+      list.push('author');
+    }
+    return list;
+  }
+
+  usagesOfMedia(mediaId: string): string[] {
+    const meta_data_list = this.usagesOfMediaInMetaData(mediaId);
+    return meta_data_list.concat(this.usagesOfMediaInGameElements(mediaId));
+  }
 }
 
 /**

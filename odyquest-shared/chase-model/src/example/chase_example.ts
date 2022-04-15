@@ -15,7 +15,7 @@ export function getSimpleExample(): Chase {
   const metaData = new ChaseMetaData();
   metaData.chaseId = 'simple_id';
   metaData.title = 'This is an example chase!';
-  metaData.preview = new Preview()
+  metaData.preview = new Description()
   metaData.preview.text = 'This chase has no content';
   chase.metaData = metaData;
   chase.gameElements = new Map<number, GameElement>();
@@ -44,8 +44,12 @@ export function getTestChase(): Chase {
   const metaData = new ChaseMetaData();
   metaData.chaseId = 'simple_id';
   metaData.title = 'This is an example chase!';
-  metaData.preview = new Preview()
+  metaData.preview = new Description()
   metaData.preview.text = 'This chase has no content';
+  metaData.preview.image = 'simple_image';
+  metaData.author = new Description()
+  metaData.author.text = 'author';
+  metaData.author.image = 'author_image';
   chase.metaData = metaData;
   chase.gameElements = new Map<number, GameElement>();
 
@@ -53,7 +57,8 @@ export function getTestChase(): Chase {
   narrative.title = 'narrative_title';
   narrative.description = new Description();
   narrative.description.text = 'Some text!';
-  narrative.description.image = 'image_id';
+  narrative.description.image = 'simple_image';
+  narrative.media = 'narrative_media';
   const forward = new XButton();
   forward.name = 'continue';
   forward.destination = 1;
@@ -67,7 +72,7 @@ export function getTestChase(): Chase {
   quest.title = 'quest_title';
   quest.description = new Description();
   quest.description.text = 'Some text!';
-  quest.description.image = 'image_id';
+  quest.description.image = 'quest_image';
   chase.gameElements.set(1,quest);
 
   return chase;
