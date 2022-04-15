@@ -24,15 +24,21 @@
         <source> Quests </source><target state="translated">Rätsel</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="main_editor.add_quest" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> add quest<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source><target state="translated">Rätsel hinzufügen</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="main_editor.narratives" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> add quest<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source><target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Rätsel hinzufügen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit><trans-unit id="main_editor.narratives" datatype="html">
         <source> Narratives </source><target state="translated">Erzählelemente</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="main_editor.add_narrative" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> add narrative<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source><target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Narrative hinzufügen </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="add_media" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> add narrative<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source><target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Erzählelement hinzufügen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main-editor/main-editor.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit><trans-unit id="add_media" datatype="html">
         <source> Add media
 </source><target state="translated"> Mediadatei hinzufügen
 </target>

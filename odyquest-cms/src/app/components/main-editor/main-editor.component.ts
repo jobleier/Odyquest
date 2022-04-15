@@ -71,13 +71,10 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  questSelectorClicked(text: string) {
-    console.log('Quest Selector Clicked', text);
-
-    // parse id from name, not so pretty a solution TBH
+  gameElementSelectorClicked(text: string) {
+    // parse id from name
     this.selectedQuest = this.chaseEditor.getElementIdByName(text);
     if (this.elementEditor) {
-      // this.elementEditor.reloadChase();
       this.elementEditor.setGameElementToEdit(
         this.chaseEditor.getChase().gameElements.get(this.selectedQuest)
       );
@@ -93,7 +90,7 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
   }
 
   deleteChase() {
-    console.log('Lösche Chase mit ID: ', this.chaseID);
+    console.log('Delete chase with id: ', this.chaseID);
     this.chaseService.deleteChase(this.chaseID);
     // FIXME navigate to list?
   }
@@ -117,7 +114,7 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
     this.loadDataFromChase();
 
     // jump to new element
-    this.questSelectorClicked(this.chaseEditor.getElementNameById(id));
+    this.gameElementSelectorClicked(this.chaseEditor.getElementNameById(id));
   }
 
   uploadChase($event): void {
