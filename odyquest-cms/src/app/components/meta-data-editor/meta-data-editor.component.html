@@ -1,36 +1,64 @@
-<div class="editor-top-container">
-  <app-image-upload class="editor-image-outer-container"
+<div class="editor_card_container">
+  <div class="editor_text_container">
+    <form id="editor-meta-info-input">
+      <div class="editor_field_group">
+        <mat-form-field>
+          <input matInput
+                 type="text"
+                 id="author"
+                 name="Titel"
+                 [(ngModel)]="chaseEditor.getChase().metaData.title"
+                 i18n-placeholder
+                 placeholder="Title of the scavenger hunt...">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+                 type="text"
+                 id="author"
+                 name="Autor"
+                 [(ngModel)]="chaseEditor.getChase().metaData.author.text"
+                 i18n-placeholder
+                 placeholder="Author...">
+        </mat-form-field>
+      </div>
+      <hr />
+      <div class="editor_field_group">
+        <mat-form-field>
+          <mat-label class="" for="initial-game-element" i18n="@meta_data.initial_element">
+            Initial element:
+          </mat-label>
+          <mat-select name="initial-game-element"
+                      id="initial-game-element"
+                      [(ngModel)]="initialElement">
+            <mat-option *ngFor="let target of chaseEditor.getElementNames()"
+                      [value]='target'
+                      [attr.selected]='target'
+                      (click)="onInitialGameElementChange(target)">
+              {{target}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox class="content-field-container"
+                      color="primary"
+                      name="combination_map_check"
+                      [(ngModel)]="chaseEditor.getChase().metaData.published"
+                      i18n="@@meta_data.published">
+          public available
+        </mat-checkbox>
+      </div>
+    </form>
+  </div>
+  <app-image-upload class="editor_image_container"
                     [label]="'Author'"
                     [mediaId]="getAuthorImage()"
                     (mediaIdChange)="updateAuthorImage($event)" >
   </app-image-upload>
-  <div class="editor-top-right-container">
+</div>
 
+<div class="editor_card_container">
+  <div class="editor_text_container">
     <form id="editor-meta-info-input">
-      <mat-form-field>
-        <input matInput
-               type="text"
-               id="author"
-               name="Titel"
-               [(ngModel)]="chaseEditor.getChase().metaData.title"
-               i18n-placeholder
-               placeholder="Title of the scavenger hunt...">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput
-               type="text"
-               id="author"
-               name="Autor"
-               [(ngModel)]="chaseEditor.getChase().metaData.author.text"
-               i18n-placeholder
-               placeholder="Author...">
-      </mat-form-field>
-
-      <app-image-upload [mediaId]="getImage()"
-                        (mediaIdChange)="updateImage($event)" >
-      </app-image-upload>
-
       <mat-form-field>
         <textarea matInput
                   type="text"
@@ -42,34 +70,25 @@
                   [(ngModel)]="chaseEditor.getChase().metaData.preview.text"></textarea>
       </mat-form-field>
     </form>
+    <div class="row">
+      <div class="column">
+        <a href="https://www.markdownguide.org/cheat-sheet#basic-syntax"
+           i18n="@@quest_editor.markdown_tutorial">
+          Tutorial for text formatting
+        </a>
+        <a href="https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md"
+           i18n="@@quest_editor.emoji_tutorial">
+          Tutorial for inserting emojis
+        </a>
+      </div>
+      <!--<div class="column">
+        <button mat-raised-button color="primary" (click)="main_editor.tryInApp()">Ausprobieren</button>
+        </div>-->
+    </div>
   </div>
+  <app-image-upload class="editor_image_container"
+                    [mediaId]="getImage()"
+                    (mediaIdChange)="updateImage($event)" >
+  </app-image-upload>
 </div>
 
-<div class="content-all-types">
-  <div class="content-type-general">
-    <form id="editor-general-info-input">
-      <mat-checkbox class="content-field-container"
-                    color="primary"
-                    name="combination_map_check"
-                    [(ngModel)]="chaseEditor.getChase().metaData.published"
-                    i18n="@@meta_data.published">
-        public available
-      </mat-checkbox>
-      <mat-form-field class="content-field-container">
-        <mat-label class="" for="initial-game-element" i18n="@meta_data.initial_element">
-          Initial element:
-        </mat-label>
-        <mat-select name="initial-game-element"
-                    id="initial-game-element"
-                    [(ngModel)]="initialElement">
-          <mat-option *ngFor="let target of chaseEditor.getElementNames()"
-                      [value]='target'
-                      [attr.selected]='target'
-                      (click)="onInitialGameElementChange(target)">
-            {{target}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </div>
-</div>

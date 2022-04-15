@@ -1,10 +1,10 @@
 @import "src/styles";
 @import "src/app/components/editor-styles.scss";
 
-.editor-hidden {
+.editor_hidden {
   display: none;
 }
-.editor-visible {
+.editor_visible {
 }
 
 .content-for-object-search {
@@ -15,7 +15,6 @@
   padding: 10px;
   border: 1px solid white;
   justify-content: space-between;
-  //background: blue;
 }
 
 .object-select-container {
@@ -23,7 +22,6 @@
   flex-direction: column;
   width: 50%;
   height: 100%;
-  //background: green;
 }
 
 .object-select-container-single {
@@ -41,34 +39,6 @@
   width: 40%;
 }
 
-.content-type-hint {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-top: 50px;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-bottom: 5px;
-  flex-wrap: wrap;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .border {
   border: 1px solid rgba(0,0,0,.2);
   border-radius: 4px;
@@ -84,11 +54,6 @@
   margin-left: 20px;
   margin-right: 20px;
   cursor: pointer;
-}
-
-h3 {
-  font-weight: 500;
-  text-align: center;
 }
 
 #editor-meta-info-input{
@@ -113,11 +78,6 @@ hr {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.button-array-container {
-  padding-top: 10px;
-  width: 100%;
-}
-
 @media screen and (orientation: landscape) {
   .hint_top_container {
     flex-direction: row;
@@ -125,12 +85,6 @@ hr {
   .hint_control_container {
     width: 10%;
     flex-direction: column;
-  }
-  .hint_image_container {
-    width: 30%;
-  }
-  .hint_text_container {
-    width: 50%;
   }
   .hint_text_area {
     min-height: 400px;
@@ -143,12 +97,6 @@ hr {
   .hint_control_container {
     width: 90%;
     flex-direction: row;
-  }
-  .hint_image_container {
-    width: 90%;
-  }
-  .hint_text_container {
-    width: 90%;
   }
   .hint_text_area {
     min-height: 200px;
@@ -164,11 +112,6 @@ hr {
   text-align: center;
   padding: 10px;
   display: flex;
-}
-
-.hint_text_container{
-  padding: 10px;
-  width:100%;
 }
 
 .hint_text_form_field {
