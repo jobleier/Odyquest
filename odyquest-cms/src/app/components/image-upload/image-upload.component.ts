@@ -34,14 +34,21 @@ export class ImageUploadComponent implements OnInit {
   }
 
   addImage(): void {
-    console.log('create new media entry');
     const image = new Image();
     image.chaseId = this.chaseEditor.getChaseId();
     if (this.hasImage()) {
       image.mediaId = this.mediaId;
+    } else {
+      this.mediaId = this.chaseEditor.createMedia(image);
     }
-    this.mediaId = this.chaseEditor.createMedia(image);
-    this.mediaIdChange.emit();
+    console.log('Created new media entry with id ', this.mediaId);
+    this.chaseService.createOrUpdateMedia(image).subscribe(id => {
+      if (id === this.mediaId) {
+        this.mediaIdChange.emit(this.mediaId);
+      } else {
+        console.error('Pushed new media entry to server and server responded with different id.');
+      }
+    });
   }
 
   uploadMedia($event): void {
