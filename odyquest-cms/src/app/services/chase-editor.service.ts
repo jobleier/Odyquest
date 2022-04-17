@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Chase, GameElement, Image, Media,Narrative, Quest } from 'chase-model';
+import { Chase, createUniqueId, GameElement, Image, Media,Narrative, Quest } from 'chase-model';
 
 @Injectable({
   providedIn: 'root'
@@ -115,6 +115,16 @@ export class ChaseEditorService {
   }
   public setMedia(id: string, media: Media): void {
     this.chase.media.set(id, media);
+  }
+  public createMedia(media: Media): string {
+    let existing: string[] = [];
+    for (const id of this.chase.media.keys()) {
+      existing.push(id);
+    }
+    let id = createUniqueId(existing);
+    media.mediaId = id;
+    this.chase.media.set(id, media);
+    return
   }
   public getImages(): Image[] {
     const list = new Array<Image>();

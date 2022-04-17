@@ -1,4 +1,5 @@
 import { Chase, ChaseList, ChaseSummary, ChaseMetaData, Image, Media, MediaContainer } from './chase-model';
+import { createUniqueId } from './chase-model';
 import {
   readObject,
   readSpecializedObject,
@@ -137,19 +138,9 @@ export class FileHandling {
     return readStream(new Path(this.access).getMediaFilePath(chaseId, mediaId, fileId), {start, end });
   }
 
-  private getUniqueId(): string {
-    // tslint:disable-next-line:no-bitwise
-    const S6 = (((1 + Math.random()) * 0x1000000) | 0).toString(16).substring(1);
-    return S6;
-  }
-
   public getFreeChaseId(): string {
     const list = listDirs(new Path(this.access).getChasesPrefixPath());
-    let uuid;
-    do {
-      uuid = this.getUniqueId();
-    } while (list.includes(uuid));
-    return uuid;
+    return createUniqueId(list);
   }
   public getFreeMediaId(chaseId: string): string {
     let list: string[] = [];
@@ -157,10 +148,6 @@ export class FileHandling {
        list = listDirs(new Path(this.access).getMediaPrefixPath(chaseId));
     } catch (e) {
     }
-    let uuid;
-    do {
-      uuid = this.getUniqueId();
-    } while (list.includes(uuid));
-    return uuid;
+    return createUniqueId(list);
   }
 }

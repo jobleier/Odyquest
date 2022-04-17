@@ -40,12 +40,8 @@ export class ImageUploadComponent implements OnInit {
     if (this.hasImage()) {
       image.mediaId = this.mediaId;
     }
-    this.chaseService.createOrUpdateMedia(image).subscribe(id => {
-      this.mediaId = id;
-      image.mediaId = id;
-      this.chaseEditor.setImage(this.mediaId, image);
-      this.mediaIdChange.emit(this.mediaId);
-    });
+    this.mediaId = this.chaseEditor.createMedia(image);
+    this.mediaIdChange.emit();
   }
 
   uploadMedia($event): void {

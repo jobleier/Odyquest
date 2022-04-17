@@ -23,3 +23,4 @@ export { RequirementCombination } from './requirement_combination';
 export { LogicType, SolutionTerm } from './solution_term';
 export { XButton } from './x_button';
 export { getSimpleExample } from './example/chase_example';
+export { createUniqueId } from './utils';
