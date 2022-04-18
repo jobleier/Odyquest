@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Description, GameElement, Narrative, Quest } from 'chase-model';
 import { ChaseService } from 'chase-services';
 import { ChaseEditorService } from 'src/app/services/chase-editor.service';
+import { NarrativeEditorComponent } from 'src/app/components/narrative-editor/narrative-editor.component';
+import { QuestEditorComponent } from 'src/app/components/quest-editor/quest-editor.component';
 
 @Component({
   selector: 'app-game-element-editor',
@@ -16,8 +18,8 @@ export class GameElementEditorComponent implements OnInit {
   is_narrative: boolean;
   initial_setup = true;
 
-  @ViewChild('narrative_editor') narrativeEditor;
-  @ViewChild('quest_editor') questEditor;
+  @ViewChild('narrative_editor') narrativeEditor: NarrativeEditorComponent;
+  @ViewChild('quest_editor') questEditor: QuestEditorComponent;
 
   constructor(
     public chaseEditor: ChaseEditorService,

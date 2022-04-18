@@ -177,7 +177,9 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
     this.prepareSavingChase();
     this.chaseStorage.setRunningChase(this.chaseEditor.getChase());
     this.chaseStorage.setCurrentPosition(this.selectedGameElement || this.chaseEditor.getChase().initialGameElement);
-    window.open('/app/de/chase?id=', '_blank');
+    const url = this.configuration.getUrlOfApp($localize`:@@locale:en`) + '/chase?id=';
+    console.log('Open chase in app: ', url);
+    window.open(url, '_blank');
   }
 
   hasModifiableApi(): boolean {

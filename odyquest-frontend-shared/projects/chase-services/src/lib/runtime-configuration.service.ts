@@ -46,6 +46,10 @@ export class RuntimeConfigurationService implements AbstractRuntimeConfiguration
     return this.config.title['subtitle_text_' + locale];
   }
 
+  getUrlOfApp(locale: string): string {
+    return this.config.cms['url_of_app'] + '/' + locale;
+  }
+
   getMediaUrlPrefix(): string {
     if (!this.isApiBased()) {
       return '';
