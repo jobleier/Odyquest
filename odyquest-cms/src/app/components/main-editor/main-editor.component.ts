@@ -20,7 +20,7 @@ import { ChaseEditorService } from 'src/app/services/chase-editor.service';
   styleUrls: ['./main-editor.component.scss'],
 })
 export class MainEditorComponent implements OnInit, AfterViewInit {
-  selectedQuest: number;
+  selectedGameElement: number | undefined;
   chaseID: string;
   editorAction: string;
 
@@ -36,6 +36,8 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
   ) {
     this.chaseID = this.activatedRoute.snapshot.queryParams.id;
     this.editorAction = this.activatedRoute.snapshot.queryParams.action;
+    this.selectedGameElement = +this.activatedRoute.snapshot.queryParams.selected;
+    console.log('selected game element is ', this.selectedGameElement);
   }
 
   ngOnInit(): void {
@@ -53,10 +55,15 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
 
   // reads all the info from this.chaseEditor.getChase() and writes onto class members
   loadDataFromChase(): void {
-    this.selectedQuest = 1; // todo change again
     if (this.elementEditor) {
       this.elementEditor.reloadChase();
-      this.elementEditor.setMetaDataToEdit();
+      if (this.selectedGameElement) {
+        this.elementEditor.setGameElementToEdit(
+          this.chaseEditor.getChase().gameElements.get(this.selectedGameElement)
+        );
+      } else {
+        this.elementEditor.setMetaDataToEdit();
+      }
     }
   }
 
@@ -73,12 +80,13 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
 
   gameElementSelectorClicked(text: string) {
     // parse id from name
-    this.selectedQuest = this.chaseEditor.getElementIdByName(text);
+    this.selectedGameElement = this.chaseEditor.getElementIdByName(text);
     if (this.elementEditor) {
       this.elementEditor.setGameElementToEdit(
-        this.chaseEditor.getChase().gameElements.get(this.selectedQuest)
+        this.chaseEditor.getChase().gameElements.get(this.selectedGameElement)
       );
     }
+    this.activatedRoute.snapshot.queryParams.selected = this.selectedGameElement;
   }
 
   deleteGameElement(text: string) {
@@ -168,7 +176,7 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
   public tryInApp() {
     this.prepareSavingChase();
     this.chaseStorage.setRunningChase(this.chaseEditor.getChase());
-    this.chaseStorage.setCurrentPosition(this.selectedQuest);
+    this.chaseStorage.setCurrentPosition(this.selectedGameElement || this.chaseEditor.getChase().initialGameElement);
     window.open('/app/de/chase?id=', '_blank');
   }
 
