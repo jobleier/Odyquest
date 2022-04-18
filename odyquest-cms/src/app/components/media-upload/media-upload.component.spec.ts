@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { Audio, NarrativeType } from 'chase-model';
 import { ChaseService, ChaseServiceMock } from 'chase-services';
@@ -12,7 +14,12 @@ describe('MediaUploadComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ MediaUploadComponent ],
+      imports: [ 
+        MatDialogModule,
+        MatMenuModule
+      ],
       providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: RuntimeConfigurationService,
           useClass: RuntimeConfigurationServiceMock
