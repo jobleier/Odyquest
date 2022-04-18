@@ -1,5 +1,8 @@
-@import "src/styles";
 @import "src/app/components/editor-styles.scss";
+
+:host {
+  width: 100%;
+}
 
 .editor_hidden {
   display: none;
@@ -87,7 +90,7 @@ hr {
     flex-direction: column;
   }
   .hint_text_area {
-    min-height: 400px;
+    min-height: 250px;
   }
 }
 @media screen and (orientation: portrait) {
