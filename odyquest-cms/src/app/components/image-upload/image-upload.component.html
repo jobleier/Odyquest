@@ -12,7 +12,7 @@
 <div *ngIf="hasImage()">
   <div class="editor-image-container">
     <chase-image [imgClass]="getMatCardImageClass()"
-       [image]="chaseEditor.getImage(mediaId)">
+       [image]="getImage()">
     </chase-image>
     <mat-icon class="default-image" *ngIf="!hasFiles()">collections</mat-icon>
   </div>
@@ -70,7 +70,7 @@
              type="text"
              id="annotation"
              name="annotation"
-             [(ngModel)]="chaseEditor.getImage(mediaId).annotation"
+             [(ngModel)]="getImage().annotation"
              i18n-placeholder
              placeholder="Text to annotate the image with">
     </mat-form-field>
@@ -81,7 +81,7 @@
              type="text"
              id="alternative"
              name="alternative"
-             [(ngModel)]="chaseEditor.getImage(mediaId).alternative"
+             [(ngModel)]="getImage().alternative"
              i18n-placeholder
              placeholder="Alternative text describing the image">
       </textarea>

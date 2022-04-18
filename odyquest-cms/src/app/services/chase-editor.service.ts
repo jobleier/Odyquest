@@ -88,7 +88,7 @@ export class ChaseEditorService {
   }
 
   public hasChaseId(): boolean {
-    if (this.chase && this.chase.metaData.chaseId) {
+    if (this.chase && this.chase.metaData.chaseId && this.chase.metaData.chaseId !== '') {
       return true;
     } else {
       return false;
@@ -103,28 +103,11 @@ export class ChaseEditorService {
     }
   }
 
-  public getImage(id: string): Image {
-    return this.chase.getMedia<Image>(id) || new Image();
-  }
-  public setImage(id: string, image: Image): void {
-    this.setMedia(id, image);
-  }
-
-  public getMedia(id: string): Media {
-    return this.chase.getMedia<Media>(id) || new Image();
+  public getMedia<T extends Media>(id: string): T {
+    return this.chase.getMedia<T>(id);
   }
   public setMedia(id: string, media: Media): void {
     this.chase.media.set(id, media);
-  }
-  public createMedia(media: Media): string {
-    let existing: string[] = [];
-    for (const id of this.chase.media.keys()) {
-      existing.push(id);
-    }
-    let id = createUniqueId(existing);
-    media.mediaId = id;
-    this.chase.media.set(id, media);
-    return
   }
   public getImages(): Image[] {
     const list = new Array<Image>();
@@ -132,6 +115,13 @@ export class ChaseEditorService {
       if (media instanceof Image) {
         list.push(media);
       }
+    }
+    return list;
+  }
+  public getMediaList(): Media[] {
+    const list = new Array<Media>();
+    for (const media of this.chase.media.values()){
+      list.push(media);
     }
     return list;
   }

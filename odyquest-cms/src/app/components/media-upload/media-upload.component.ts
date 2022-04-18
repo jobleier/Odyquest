@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Audio, AudioFile, AugmentedReality, Media, MediaFile, MediaWithFilelist, NarrativeType, Video, VideoFile } from 'chase-model';
 import { ChaseService } from 'chase-services';
 import { RuntimeConfigurationService } from 'chase-services';
-import { ChaseEditorService } from 'src/app/services/chase-editor.service';
+import { MediaEditorService } from 'src/app/services/media-editor.service';
 
 @Component({
   selector: 'app-media-upload',
@@ -18,8 +19,9 @@ export class MediaUploadComponent implements OnInit {
 
   constructor(
     private chaseService: ChaseService,
-    public chaseEditor: ChaseEditorService,
-    private configuration: RuntimeConfigurationService
+    private configuration: RuntimeConfigurationService,
+    public mediaEditor: MediaEditorService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -27,29 +29,36 @@ export class MediaUploadComponent implements OnInit {
 
   hasMedia(): boolean {
     return this.mediaId && this.mediaId !== ''
-      && this.chaseEditor.getChase().getMedia<Media>(this.mediaId) !== undefined;
+      && this.mediaEditor.getMedia(this.mediaId) !== undefined;
   }
 
   addMedia(): void {
-    console.log('create new media entry');
-    const media = this.createMedia();
-    media.chaseId = this.chaseEditor.getChaseId();
+    const media = this.createMediaFromType();
+    media.chaseId = this.mediaEditor.getChaseId();
     if (this.hasMedia()) {
       media.mediaId = this.mediaId;
-    }
-    this.chaseService.createOrUpdateMedia(media).subscribe(id => {
-      this.mediaId = id;
-      media.mediaId = id;
-      this.chaseEditor.setMedia(this.mediaId, media);
+    } else {
+      this.mediaId = this.mediaEditor.createMedia(media);
       this.mediaIdChange.emit(this.mediaId);
-    });
+      console.log('Created new media entry with id ', this.mediaId);
+    }
+    if (this.configuration.isApiBased()) {
+      this.chaseService.createOrUpdateMedia(media).subscribe(id => {
+        if (id === this.mediaId) {
+          this.mediaIdChange.emit(this.mediaId);
+        } else {
+          console.error('Pushed new media entry to server and server responded with different id.');
+        }
+      });
+    } else {
+      this.mediaIdChange.emit(this.mediaId);
+    }
   }
 
   uploadMedia($event): void {
-    console.log('Opening file explorer to load local media file...');
     console.log($event.target.files[0]);
-    if (!this.chaseEditor.hasChaseId() || this.chaseEditor.getChaseId() === '') {
-      console.log('ChaseId not set, can not upload media file.');
+    if (!this.mediaEditor.hasChaseId()) {
+      console.error('ChaseId not set, can not upload media file.');
       return;
     }
     if (!this.mediaId || this.mediaId === '') {
@@ -58,42 +67,52 @@ export class MediaUploadComponent implements OnInit {
     }
     const reader = new FileReader();
     reader.addEventListener('load', (e) => {
-      console.log('upload file with chaseId', this.chaseEditor.getChaseId(), ' and mediaId ', this.mediaId);
+      console.log('upload file with chaseId', this.mediaEditor.getChaseId(), ' and mediaId ', this.mediaId);
       this.chaseService
         .createMediaFile(
-          this.chaseEditor.getChaseId(),
+          this.mediaEditor.getChaseId(),
           this.mediaId,
           $event.target.files[0]
         )
         .subscribe((media) => {
           console.log('...uploading done');
-          // TODO check media type
-          this.chaseEditor.setMedia(this.mediaId, media);
+          this.mediaEditor.setMedia(this.mediaId, media);
         });
     });
     reader.readAsArrayBuffer($event.target.files[0]);
   }
 
   getDefaultMediaUrl(): string {
-    const image = this.chaseEditor.getMedia(this.mediaId);
+    const image = this.mediaEditor.getMedia(this.mediaId);
     if (!(this.mediaId) || !(image instanceof Media)) {
-      console.log('MediaId not set or does not point to image, can not get url to image.');
+      console.warn('MediaId not set or does not point to image, can not get url to image.');
       return '';
     }
     return image.getDefaultUrl(this.configuration.getMediaUrlPrefix());
   }
 
-  updateMediaUrl(url: string): void {
+  createFileEntryFromUrl(url: string) {
+    switch (this.narrativeType) {
+      case NarrativeType.Audio:
+        return new AudioFile(url, '', 0);
+      case NarrativeType.Video:
+        return new VideoFile(url, '', 0);
+      case NarrativeType.AugmentedReality:
+        return new MediaFile(url);
+      default:
+        console.error('Create media of unknown type');
+  }
+  }
+  updateMediaUrl(event: any): void {
     if (!(this.mediaId)) {
       console.log('MediaId not set, can not set url.');
       return;
     }
-    const media = this.chaseEditor.getMedia(this.mediaId) as MediaWithFilelist<MediaFile>;
+    const media = this.mediaEditor.getMedia(this.mediaId) as MediaWithFilelist<MediaFile>;
     // replace all existing files with given url
-    // TODO instanciate correct media file type
-    media.files = [new MediaFile(url)];
+    media.files = [this.createFileEntryFromUrl(event.target.value)];
     media.defaultIndex = 0;
-    this.chaseEditor.setMedia(this.mediaId, media);
+    this.mediaEditor.setMedia(this.mediaId, media);
   }
 
   canUploadMedia(): boolean {
@@ -102,8 +121,18 @@ export class MediaUploadComponent implements OnInit {
 
   hasFiles(): boolean {
     return this.mediaId && this.mediaId !== ''
-    // && this.chaseEditor.getMedia(this.mediaId) instanceof this.getMediaType()
-      && this.chaseEditor.getMedia(this.mediaId).hasFiles();
+      && this.mediaEditor.getMedia(this.mediaId) instanceof this.getMediaType()
+      && this.mediaEditor.getMedia(this.mediaId).hasFiles();
+  }
+
+  deleteImage(): void {
+    this.mediaId = '';
+    this.mediaIdChange.emit(this.mediaId);
+    // TODO clean up media list
+  }
+
+  getMedia(): Media {
+    return this.mediaEditor.getMedia(this.mediaId);
   }
 
   hasAudio(): boolean {
@@ -120,7 +149,7 @@ export class MediaUploadComponent implements OnInit {
         return Video;
     }
   }
-  createMedia(): Media {
+  createMediaFromType(): Media {
     switch (this.narrativeType) {
       case NarrativeType.Audio:
         return new Audio();
