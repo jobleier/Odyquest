@@ -12,5 +12,8 @@
     "subtitle_text_en": "the scavenger hunt app",
     "title_text_de": "Willkommen zur Schnitzeljagd mit Odyquest",
     "subtitle_text_de": "die Schnitzeljagd-App"
+  },
+  "cms": {
+    "url_of_app": "/app/"
   }
 }
