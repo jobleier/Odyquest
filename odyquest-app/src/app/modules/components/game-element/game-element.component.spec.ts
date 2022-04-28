@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Chase } from 'chase-model';
+import { GameService } from 'src/app/core/services/game.service';
 import { GameElementComponent } from './game-element.component';
 
 describe('GameElementComponent', () => {
@@ -8,7 +10,10 @@ describe('GameElementComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameElementComponent ]
+      declarations: [ GameElementComponent ],
+       providers: [
+         { provide: GameService, useValue: { chase: new Chase()} }
+       ]
     })
     .compileComponents();
   });
