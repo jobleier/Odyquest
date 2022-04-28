@@ -14,6 +14,8 @@ export class GameElementComponent implements OnInit {
   @Output() selection: EventEmitter<number> = new EventEmitter();
   @Output() chaseStatus: EventEmitter<ChaseStatus> = new EventEmitter();
 
+  show = true;
+
   constructor(private game: GameService) { }
 
   ngOnInit(): void {
@@ -21,6 +23,12 @@ export class GameElementComponent implements OnInit {
 
   selectDestination(destination: number) {
     this.selection.emit(destination);
+
+    // workaround to ensure redrawing child if current and next are of same type
+    this.show = false;
+    setTimeout(() => {
+      this.show = true
+    }, 10);
   }
 
   setChaseStatus(status: ChaseStatus) {
@@ -28,10 +36,10 @@ export class GameElementComponent implements OnInit {
   }
 
   isNarrative(element: GameElement): boolean {
-    return element instanceof Narrative;
+    return this.show && element instanceof Narrative;
   }
 
   isQuest(element: GameElement): boolean {
-    return element instanceof Quest;
+    return this.show && element instanceof Quest;
   }
 }
