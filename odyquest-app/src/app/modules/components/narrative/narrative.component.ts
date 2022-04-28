@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,13 +13,14 @@ import { HintComponent } from '../hint/hint.component';
   templateUrl: './narrative.component.html',
   styleUrls: ['./narrative.component.scss']
 })
-export class NarrativeComponent implements OnInit {
+export class NarrativeComponent implements OnInit, OnChanges {
   @Input() narrative: Narrative;
   @Output() selection: EventEmitter<number> = new EventEmitter();
   @Output() chaseStatus: EventEmitter<ChaseStatus> = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
+    private changeDetector: ChangeDetectorRef,
     private game: GameService
   ) { }
 
@@ -29,6 +30,11 @@ export class NarrativeComponent implements OnInit {
       // hide text field
       this.hideText();
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.changeDetector.detectChanges();
   }
 
   select(button: number): void {

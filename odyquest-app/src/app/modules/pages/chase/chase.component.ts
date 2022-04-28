@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { deserialize, serialize } from 'typescript-json-serializer';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,12 +7,8 @@ import { UiService } from './../../../core/services/ui.service';
 import { ChaseService } from 'chase-services';
 import { ChaseStorageService } from 'chase-services';
 import { ChaseStatus } from 'chase-model';
-import { CloseWarningGuard } from 'src/app/core/services/close-warning.guard';
-import { GameService, QuestStatus } from '../../../core/services/game.service';
+import { GameService } from '../../../core/services/game.service';
 import { GameElement } from 'chase-model';
-import { Description } from 'chase-model';
-import { Narrative } from 'chase-model';
-import { Quest } from 'chase-model';
 import { Chase } from 'chase-model';
 
 import { getSimpleExample } from 'chase-model';
@@ -35,6 +29,7 @@ export class ChaseComponent implements OnInit {
   }
 
   constructor(private activatedRoute: ActivatedRoute,
+              private changeDetector: ChangeDetectorRef,
               private chaseService: ChaseService,
               private router: Router,
               private uiService: UiService,
@@ -64,6 +59,7 @@ export class ChaseComponent implements OnInit {
 
   selectDestination(destination: number): void {
     this.displayElement = this.game.continueWith(destination);
+    this.changeDetector.markForCheck();
     // navigate to top for next element
     document.getElementById('router').scrollTo(0, 0);
     console.log('Select next element "' + this.displayElement.title + '" (' + destination + ')');
@@ -76,13 +72,4 @@ export class ChaseComponent implements OnInit {
       setTimeout(() => { this.router.navigateByUrl('/finished?status=' + chaseStatus); }, 1500);
     }
   }
-
-  isNarrative(element: GameElement): boolean {
-    return element instanceof Narrative;
-  }
-
-  isQuest(element: GameElement): boolean {
-    return element instanceof Quest;
-  }
-
 }

@@ -1,0 +1,11 @@
+<app-narrative *ngIf="isNarrative(this.element)"
+  [narrative]="this.element"
+  (selection)="selectDestination($event)"
+  (chaseStatus)="setChaseStatus($event)">
+</app-narrative>
+<app-quest *ngIf="isQuest(this.element)"
+  [quest]="this.element"
+  [questStatus]="this.game.getQuestStatus()"
+  (selection)="selectDestination($event)"
+  (chaseStatus)="setChaseStatus($event)">
+</app-quest>
