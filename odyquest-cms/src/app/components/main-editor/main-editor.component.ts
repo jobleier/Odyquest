@@ -90,10 +90,13 @@ export class MainEditorComponent implements OnInit, AfterViewInit {
   }
 
   deleteGameElement(text: string) {
-    const index = this.chaseEditor.getElementIdByName(text);
-    this.chaseEditor.getChase().gameElements.delete(index);
+    const id = this.chaseEditor.getElementIdByName(text);
+    this.chaseEditor.deleteGameElement(id);
     console.log('deleted GameElement:', text);
-
+    if (this.selectedGameElement === id)
+    {
+      this.selectedGameElement = undefined;
+    }
     this.loadDataFromChase();
   }
 

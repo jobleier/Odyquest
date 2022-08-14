@@ -69,6 +69,11 @@ export class ChaseEditorService {
     return id;
   }
 
+  public deleteGameElement(id: number): void {
+    this.chase.gameElements.delete(id);
+    this.initElementNames();
+  }
+
   private getFreeElementId(): number {
     let id = 1;
     while (true) {
