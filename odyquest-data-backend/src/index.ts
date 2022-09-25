@@ -46,7 +46,7 @@ if (getUseAuth()) {
       ]
   };
   const jwksService = getSimpleJwksService(getAuthJwksUrl());
-  app.use('/protected/*', secure(jwksService, authOptions));
+  app.use('/protected/*', [cors(options), bodyParser.json() as RequestHandler, secure(jwksService, authOptions)]);
 } else {
   console.warn("No authentication method used, do not use in production!");
 }
