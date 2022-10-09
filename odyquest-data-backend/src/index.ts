@@ -14,7 +14,22 @@ import { Access, AccessLevel } from './access';
 export const app = express();
 const upload = multer();
 
-const options: cors.CorsOptions = {
+const corsDefaultOptions: cors.CorsOptions = {
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'X-Access-Token',
+    'Authorization',
+  ],
+  credentials: true,
+  methods: 'GET,HEAD,OPTIONS',
+  origin: getCorsOrigin(),
+  preflightContinue: false,
+};
+
+const corsProtectedOptions: cors.CorsOptions = {
   allowedHeaders: [
     'Origin',
     'X-Requested-With',
@@ -28,9 +43,8 @@ const options: cors.CorsOptions = {
   origin: getCorsOrigin(),
   preflightContinue: false,
 };
-app.use(cors(options));
-app.use(bodyParser.json() as RequestHandler);
 
+app.use(cors(corsDefaultOptions));
 app.get('/', (req, res) => {
     res.send('Boom!');
 });
@@ -41,12 +55,12 @@ if (getUseAuth()) {
       claims: [
           {
               name: 'iss',
-            value: getAuthIssuesBaseUrl(),
+              value: getAuthIssuesBaseUrl(),
           },
       ]
   };
   const jwksService = getSimpleJwksService(getAuthJwksUrl());
-  app.use('/protected/*', [cors(options), bodyParser.json() as RequestHandler, secure(jwksService, authOptions)]);
+  app.use('/protected/*', [secure(jwksService, authOptions), cors(corsProtectedOptions), bodyParser.json() as RequestHandler]);
 } else {
   console.warn("No authentication method used, do not use in production!");
 }
