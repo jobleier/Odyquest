@@ -224,9 +224,10 @@ app.delete('/protected/file/*/*/*', upload.single('file'), function (req, res) {
 app.get("/stream/*/*/*", function (req, res) {
   // do not limit file access right now
   const handling = new DataHandling(new Access(AccessLevel.Protected));
-  const range = req.headers.range;
+  let range = req.headers.range;
   if (!range) {
-    res.status(400).send("Requires Range header");
+    range = "0-";
+    // res.status(400).send("Requires Range header");
   }
 
   const videoSize = handling.getMediaFileSize(req.params[0], req.params[1], req.params[2]);
