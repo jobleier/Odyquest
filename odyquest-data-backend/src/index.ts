@@ -7,7 +7,7 @@ import express, { RequestHandler } from 'express';
 import multer from 'multer';
 
 import { DataHandling } from './data-handling';
-import { getCorsOrigin, getApiPort, getUseAuth, getAuthIssuesBaseUrl, getAuthJwksUrl } from './environment';
+import { getCorsOrigin, getApiPort, getUseAuth, getAuthIssuesBaseUrl, getAuthJwksUrl, isDebugging } from './environment';
 import { Chase, ChaseList, ChaseMetaData, Image, Media, MediaContainer } from './chase-model';
 import { Access, AccessLevel } from './access';
 
@@ -224,6 +224,11 @@ app.delete('/protected/file/*/*/*', upload.single('file'), function (req, res) {
 app.get("/stream/*/*/*", function (req, res) {
   // do not limit file access right now
   const handling = new DataHandling(new Access(AccessLevel.Protected));
+  if (isDebugging())
+  {
+    console.log('Received request for stream');
+    console.log(req);
+  }
   let range = req.headers.range;
   if (!range) {
     range = "0-";

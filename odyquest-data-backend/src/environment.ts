@@ -33,3 +33,7 @@ export function getAuthJwksUrl(): string {
 export function getFilesystemPath(): string {
   return getEnv(process.env.ODYQUEST_FILESYSTEM_PATH, "data");
 }
+
+export function isDebugging(): boolean {
+  return getEnv(process.env.ODYQUEST_DEBUGGING, 'false') === 'true';
+}
