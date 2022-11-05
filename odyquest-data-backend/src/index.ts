@@ -22,6 +22,7 @@ const corsDefaultOptions: cors.CorsOptions = {
     'Accept',
     'X-Access-Token',
     'Authorization',
+    'Range',
   ],
   credentials: true,
   methods: 'GET,HEAD,OPTIONS',
